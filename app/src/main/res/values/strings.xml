@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">Mimic</string>
     <string name="title_activity_settings">Settings</string>
+
+
+    <string name="on">På</string>
+    <string name="off">Av</string>
+
+
+    <string name="music">Musik</string>
 </resources>

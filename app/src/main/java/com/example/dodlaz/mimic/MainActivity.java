@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -31,7 +32,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
 
             SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            text.setText("Box: " + (sp.getBoolean("b", false) ? "True" : "False"));
+            //text.setText("Box: " + (sp.getBoolean("Music", false) ? "True" : "False"));
         }
     };
 }
