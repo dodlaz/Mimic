@@ -6,6 +6,22 @@
     <string name="on">På</string>
     <string name="off">Av</string>
 
+    <string name="donate_menu_item_title">Donera</string>
+    <string name="donate_url">https://paypal.me/ArvidKarlsson/10</string>
+
 
     <string name="music">Musik</string>
+
+    <string name="app_id">794B7BBF</string>
+    <string name="namespace">urn:x-cast:com.google.cast.sample.helloworld</string>
+    <string name="action_settings">Settings</string>
+    <string name="message_to_cast">Message to Cast&#8230;</string>
+    <string name="media_route_menu_title">Play on&#8230;</string>
+    <string name="instructions">Talk to me</string>
+    <string name="title_activity_game">Game</string>
+
+    <!--Time-->
+    <string name="n_sec">N sec</string>
+    <string name="sec_remaining">Seconds remaining</string>
+    <string name="game_over">Game Over</string>
 </resources>
