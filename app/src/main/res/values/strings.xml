@@ -24,4 +24,5 @@
     <string name="n_sec">N sec</string>
     <string name="sec_remaining">Seconds remaining</string>
     <string name="game_over">Game Over</string>
+    <string name="button_game_text">Press the button saying</string>
 </resources>

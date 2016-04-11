@@ -2,8 +2,9 @@ package com.example.dodlaz.mimic;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -20,33 +21,59 @@ public class GameActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         game_textview_timer = (TextView) findViewById(R.id.game_textview_timer);
 
-        new CountDownTimer(5000, 1000) {
 
-            public void onTick(long millisUntilFinished) {
-                game_textview_timer.setText(
-                        getApplicationContext().getResources().getString(R.string.sec_remaining)
-                                + ": "
-                                + millisUntilFinished / 1000);
-            }
+        Fragment fragment = new GameFragment2();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_game, fragment);
+        transaction.commit();
 
-            public void onFinish() {
-                game_textview_timer.setText(getApplicationContext()
-                                .getResources()
-                                .getString(R.string.game_over)
-                );
-            }
-        }.start();
+        mCountDownTimer.start();
     }
+
+
+    CountDownTimer mCountDownTimer = new CountDownTimer(5000, 1000) {
+
+        public void onTick(long millisUntilFinished) {
+            game_textview_timer.setText(
+                    getApplicationContext().getResources().getString(R.string.sec_remaining)
+                            + ": "
+                            + millisUntilFinished / 1000);
+        }
+
+        public void onFinish() {
+            Fragment fragment = new GameFragmentButton();
+            FragmentManager manager = getSupportFragmentManager();
+            FragmentTransaction transaction = manager.beginTransaction();
+            transaction.add(R.id.fragment_game, fragment);
+            transaction.commit();
+            game_textview_timer.setText(getApplicationContext()
+                            .getResources()
+                            .getString(R.string.game_over)
+            );
+        }
+
+    };
+
+
+    public void back(View view) {
+        mCountDownTimer.start();
+        Fragment fragment = new GameFragment2();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_game, fragment);
+        transaction.commit();
+    }
+
+    public void red(View view) {
+        Fragment fragment = new GameFragmentButton();
+        FragmentManager manager = getSupportFragmentManager();
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_game, fragment);
+        transaction.commit();
+    }
+
 
 }
