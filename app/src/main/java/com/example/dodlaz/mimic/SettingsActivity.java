@@ -58,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor edit = sp.edit();
         edit.putBoolean(key, value);
-        edit.commit();
+        edit.apply();
     }
 
     private void loadPrefs() {

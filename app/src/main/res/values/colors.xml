@@ -3,4 +3,38 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+
+    <color name="Red">#F00</color>
+    <color name="Green">#0F0</color>
+    <color name="Yellow">#FF0</color>
+    <color name="Blue">#00F</color>
+    <color name="Pink">#F0F</color>
+    <color name="Cyan">#0FF</color>
+    <color name="White">#FFF</color>
+    <color name="Gray">#909090</color>
+    <color name="Black">#000</color>
+
+    <!--
+    <color name="DarkRed">#690000</color>
+    <color name="DarkGreen">#006900</color>
+    <color name="DarkYellow">#696900</color>
+    <color name="DarkBlue">#000069</color>
+    <color name="DarkPink">#690069</color>
+    <color name="DarkCyan">#006969</color>
+    -->
+
+    <color name="ButtonTextGame">#AAA</color>
+    <integer-array name="ButtonGameColors">
+        <item>@color/White</item>
+        <item>@color/Red</item>
+        <item>@color/Green</item>
+        <item>@color/Yellow</item>
+        <item>@color/Blue</item>
+        <item>@color/Pink</item>
+        <item>@color/Cyan</item>
+        <item>@color/Gray</item>
+        <item>@color/Black</item>
+
+    </integer-array>
 </resources>

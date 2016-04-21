@@ -10,6 +10,7 @@
     <string name="donate_url">https://paypal.me/ArvidKarlsson/10</string>
 
 
+    <!--Setings-->
     <string name="music">Musik</string>
 
     <string name="app_id">794B7BBF</string>
@@ -24,5 +25,26 @@
     <string name="n_sec">N sec</string>
     <string name="sec_remaining">Seconds remaining</string>
     <string name="game_over">Game Over</string>
+
+    <!--Light Game-->
+    <string name="ins_light_game_to_dark">Its too bright. Make it Darker.</string>
+    <string name="ins_light_game_to_bright">Its too dark. Make it brighter.</string>
+
+    <!--Button Game-->
     <string name="button_game_text">Press the button saying</string>
+    <string name="press_the">Press the</string>
+
+    <!--Game Over-->
+    <string name="your_score">Your Score</string>
+
+    <!--colors-->
+    <string name="Red">Red</string>
+    <string name="Green">Green</string>
+    <string name="Yellow">Yellow</string>
+    <string name="Blue">Blue</string>
+    <string name="Pink">Pink</string>
+    <string name="Cyan">Cyan</string>
+    <string name="White">White</string>
+    <string name="Gray">Gray</string>
+    <string name="Black">Black</string>
 </resources>

@@ -2,40 +2,105 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="top|center"
     android:background="#ff9393"
+    android:gravity="top|center"
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/guidance_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/button_game_text"
-        android:id="@+id/textView" />
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/b1"/>
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_centerInParent="true"
+        android:stretchColumns="*">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/b2"
-            android:layout_gravity="center_horizontal|top" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="1">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Button"
-            android:id="@+id/b3"
-            android:layout_gravity="right|top" />
-    </FrameLayout>
+            <Button
+                android:id="@+id/b1_1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/b1_2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/b1_3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+        </TableRow>
+
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/b2_1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/b2_2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/b2_3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/b3_1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/b3_2"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+
+            <Button
+                android:id="@+id/b3_3"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:textColor="@color/ButtonTextGame"
+                android:layout_margin="2dp"/>
+        </TableRow>
+    </TableLayout>
 
 
 </LinearLayout>

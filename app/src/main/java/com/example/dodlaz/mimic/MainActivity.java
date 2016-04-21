@@ -48,46 +48,7 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        super.onCreateOptionsMenu(menu);
-        getMenuInflater().inflate(R.menu.main, menu);
-        MenuItem mediaRouteMenuItem = menu.findItem(R.id.media_route_menu_item);
-        mediaRouteMenuItem.setIcon(android.R.drawable.ic_menu_preferences);
 
-        MenuItem donate = menu.findItem(R.id.donate_menu_item);
-        donate.setIcon(android.R.drawable.ic_menu_info_details);
 
-        return true;
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.media_route_menu_item:
-                startActivity(new Intent(getApplicationContext(), SettingsActivity.class));
-                return true;
-            case R.id.donate_menu_item:
-                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                builder.setMessage("Donate to the devoloper")
-                        .setPositiveButton("Donate", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent viewIntent = new Intent("android.intent.action.VIEW",
-                                        Uri.parse(getApplicationContext().getResources().getString(R.string.donate_url)));
-                                startActivity(viewIntent);
-                            }
-                        })
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
 
 }
