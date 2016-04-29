@@ -15,9 +15,17 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/music"
-        android:id="@+id/music_settings"
+        android:text="@string/sound"
+        android:id="@+id/sound_settings"
         android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/clear_history"
+        android:id="@+id/clear_history"
+        android:layout_below="@+id/sound_settings"
         android:layout_alignParentStart="true" />
 
 </RelativeLayout>

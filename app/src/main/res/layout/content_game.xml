@@ -13,28 +13,11 @@
             android:id="@+id/game_textview_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
             android:text="@string/n_sec"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
 
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="back"
-            android:text="Green" />
-
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="red"
-            android:text="Red" />
 
         <FrameLayout
             android:id="@+id/fragment_game"

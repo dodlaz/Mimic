@@ -1,19 +1,16 @@
 package com.example.dodlaz.mimic;
 
+import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 /**
@@ -21,6 +18,24 @@ import java.util.Random;
  */
 
 public class GameFragmentButton extends Fragment {
+    private class ButtonColor {
+        private String text;
+        private int color;
+
+        ButtonColor(String t, int c) {
+            text = t;
+            color = c;
+        }
+
+        public int getColor() {
+            return color;
+        }
+
+        public String getText() {
+            return text;
+        }
+    }
+
     private static final String TAG = "GameFragmentButton";
     private static final int[] BT_IDS = {
             R.id.b1_1, R.id.b1_2, R.id.b1_3,
@@ -30,73 +45,50 @@ public class GameFragmentButton extends Fragment {
     private static Button[] bt = new Button[BT_IDS.length];
     private TextView guidanceText;
 
-    private Map<String, Integer> team1 = new HashMap<String, Integer>();
-
-    /*
-    private static String[][] colors = {{"White", ""}, {"Red", ""}, {"Green", ""},
-            {"Yellow", "Blue", "Pink",
-            "Cyan", "Gray", "Black"};*/
-
-/*
-    List<String> colors = Arrays.asList("White", "Red", "Green",
-            "Yellow", "Blue", "Pink",
-            "Cyan", "Gray", "Black");*/
+    private ButtonColor[] colors;
 
 
     private static boolean longPressAnswer;
-    private static String buttonColorAnswer;
+    private static ButtonColor buttonColorAnswer;
     private static boolean buttonTextAnser;
     private static Random rnd = new Random();
 
 
     //==========================================================
-    public GameFragmentButton() {
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gamefragment_button, container, false);
 
+        colors = new ButtonColor[]{
+                new ButtonColor("White",  ContextCompat.getColor(getContext(), R.color.White)),
+                new ButtonColor("Red",    ContextCompat.getColor(getContext(), R.color.Red)),
+                new ButtonColor("Green",  ContextCompat.getColor(getContext(), R.color.Green)),
+                new ButtonColor("Yellow", ContextCompat.getColor(getContext(), R.color.Yellow)),
+                new ButtonColor("Blue",   ContextCompat.getColor(getContext(), R.color.Blue)),
+                new ButtonColor("Pink",   ContextCompat.getColor(getContext(), R.color.Pink)),
+                new ButtonColor("Cyan",   ContextCompat.getColor(getContext(), R.color.Cyan)),
+                new ButtonColor("Gray",   ContextCompat.getColor(getContext(), R.color.Gray)),
+                new ButtonColor("Black",  ContextCompat.getColor(getContext(), R.color.Black))
+        };
 
+        ButtonColor[] b_colors = colors.clone();
+
+        shuffleArray(colors);
+        shuffleArray(b_colors);
         for (int i = 0; i < BT_IDS.length; i++) {
             Button button = (Button) rootView.findViewById(BT_IDS[i]);
             button.setOnClickListener(buttonClick);
             button.setOnLongClickListener(longButtonClick);
+            button.setBackgroundColor(b_colors[i].getColor());
+            button.setText(colors[i].getText());
             bt[i] = button;
         }
-        ButtonShuffle();
-
-
-        team1.put(getResources().getString(R.string.White), getResources().getColor(R.color.White));
-        team1.put(getResources().getString(R.string.Red), getResources().getColor(R.color.Red));
-        team1.put(getResources().getString(R.string.Green), getResources().getColor(R.color.Green));
-        team1.put(getResources().getString(R.string.Yellow), getResources().getColor(R.color.Yellow));
-        team1.put(getResources().getString(R.string.Blue), getResources().getColor(R.color.Blue));
-        team1.put(getResources().getString(R.string.Pink), getResources().getColor(R.color.Pink));
-        team1.put(getResources().getString(R.string.Cyan), getResources().getColor(R.color.Cyan));
-        team1.put(getResources().getString(R.string.Gray), getResources().getColor(R.color.Gray));
-        team1.put(getResources().getString(R.string.Black), getResources().getColor(R.color.Black));
-
-        List keys = new ArrayList(team1.keySet());
-        Collections.shuffle(keys);
-        Collections.shuffle(keys);
-        for (Object o : keys) {
-            // Access keys/values in a random order
-            team1.get(o);
-        }
-
-
-
-        /*
-        Log.v(TAG, colors.get(0));
-        Collections.shuffle(colors);
-        Log.v(TAG, colors.get(0));*/
 
 
         longPressAnswer = Math.random() < 0.5;
-        buttonColorAnswer = "RED";//colors.get(rnd.nextInt(8 - 0) + 0);
-        buttonTextAnser = Math.random() < 0.5;
+        buttonColorAnswer = colors[rnd.nextInt(colors.length - 0) + 0];
+        buttonTextAnser = Math.random() < 0.;
 
 
         String text;
@@ -106,9 +98,9 @@ public class GameFragmentButton extends Fragment {
             text = "Press the ";
         }
         if (buttonTextAnser) {
-            text += "text saying " + buttonColorAnswer + ".";
+            text += "text saying " + buttonColorAnswer.getText() + ".";
         } else {
-            text += buttonColorAnswer + " button.";
+            text += buttonColorAnswer.getText() + " button.";
         }
 
 
@@ -127,10 +119,20 @@ public class GameFragmentButton extends Fragment {
             }
             for (int i = 0; i < BT_IDS.length; i++) {
                 if (v.getId() == BT_IDS[i]) {
-                    //bt[i].setText("Click: " + i);
-                    break;
+                    if ((buttonTextAnser
+                            && buttonColorAnswer.getText() == bt[i].getText())
+                            || (!buttonTextAnser
+                            && buttonColorAnswer.getColor() == ((ColorDrawable) bt[i].getBackground()).getColor()
+                    )) {
+                        Activity activity123 = getActivity();
+                        if (activity123 instanceof GameActivity) {
+                            ((GameActivity) activity123).incCompleted();
+                        }
+                        break;
+                    }
                 }
             }
+
         }
     };
     View.OnLongClickListener longButtonClick = new View.OnLongClickListener() {
@@ -140,29 +142,30 @@ public class GameFragmentButton extends Fragment {
             }
             for (int i = 0; i < BT_IDS.length; i++) {
                 if (v.getId() == BT_IDS[i]) {
-                    bt[i].setText("LongClick: " + i);
-                    return true;
+                    if ((buttonTextAnser
+                            && buttonColorAnswer.getText() == bt[i].getText())
+                            || (!buttonTextAnser
+                            && buttonColorAnswer.getColor() == ((ColorDrawable) bt[i].getBackground()).getColor()
+                    )) {
+                        Activity activity123 = getActivity();
+                        if (activity123 instanceof GameActivity) {
+                            ((GameActivity) activity123).incCompleted();
+                        }
+                        break;
+                    }
                 }
             }
             return false;
         }
     };
 
-    private void ButtonShuffle() {
-        int[] rainbow = getResources().getIntArray(R.array.ButtonGameColors);
-        shuffleArray(rainbow);
-        for (int i = 0; i < BT_IDS.length; i++) {
-            bt[i].setBackgroundColor(rainbow[i]);
-            bt[i].setText("RED");//String.format("#%06X", 0xFFFFFF & rainbow[i]));
-        }
-    }
 
-    static void shuffleArray(int[] ar) {
+    static void shuffleArray(ButtonColor[] ar) {
         Random rnd = new Random();
         for (int i = ar.length - 1; i > 0; i--) {
             int index = rnd.nextInt(i + 1);
             // Simple swap
-            int a = ar[index];
+            ButtonColor a = ar[index];
             ar[index] = ar[i];
             ar[i] = a;
         }

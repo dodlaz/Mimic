@@ -1,93 +1,89 @@
 package com.example.dodlaz.mimic;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
 public class GameActivity extends AppCompatActivity {
+    private static final int TIME = 5*1000;
     private int completed = 0;
     private TextView game_textview_timer;
-    private final Fragment gameFragmentButton = new GameFragmentButton();
-    private final Fragment gameFragmentLight = new GameFragmentLight();
-    private final Fragment gameFragmentGameOver = new GameFragmentGameOver();
+    private FragmentManager manager;
+
+    private Fragment[] gf;
+    private Fragment gameFragmentGameOver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //INIT
+        gf = new Fragment[]{//TODO Do this work?
+                new GameFragmentLocate(),
+                new GameFragmentShake(),
+                new GameFragmentLight(),
+                new GameFragmentButton(),
+                new GameFragmentCode()
+        };
+        gameFragmentGameOver = new GameFragmentGameOver();
+        manager = getSupportFragmentManager();
+
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(
+                WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN
+        );
         setContentView(R.layout.activity_game);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
         game_textview_timer = (TextView) findViewById(R.id.game_textview_timer);
 
-
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_game, gameFragmentLight);
-        transaction.commit();
-
+        //Start
+        nextLevel();
         mCountDownTimer.start();
     }
 
 
-    CountDownTimer mCountDownTimer = new CountDownTimer(5000, 1000) {
-
+    CountDownTimer mCountDownTimer = new CountDownTimer(TIME, 1000) {
         public void onTick(long millisUntilFinished) {
             game_textview_timer.setText(
-                    getApplicationContext().getResources().getString(R.string.sec_remaining)
-                            + ": "
-                            + millisUntilFinished / 1000);
+                    getString(R.string.n_sec, millisUntilFinished / 1000)
+            );
         }
-
         public void onFinish() {
-            FragmentManager manager = getSupportFragmentManager();
+            game_textview_timer.setText(getString(R.string.game_over));
+
             FragmentTransaction transaction = manager.beginTransaction();
             transaction.replace(R.id.fragment_game, gameFragmentGameOver);
             transaction.commit();
-            game_textview_timer.setText(getApplicationContext()
-                            .getResources()
-                            .getString(R.string.game_over)
-            );
         }
-
     };
 
-
-    public void incCompleted(){
-        completed += 1;
-    }
-    public int getCompleted(){
+    public int getCompleted() {
         return completed;
     }
-
-
-    public void back(View view) {
-        mCountDownTimer.start();
-        FragmentManager manager = getSupportFragmentManager();
-        FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_game, gameFragmentLight);
-        transaction.commit();
+    public void incCompleted() {
+        completed += 1;
+        nextLevel();
     }
-
-    public void red(View view) {
-        FragmentManager manager = getSupportFragmentManager();
+    public void nextLevel() {
+        /*
+        new Handler().post(new Runnable() {
+            public void run() {*/
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fragment_game, gameFragmentButton);
+        transaction.replace(R.id.fragment_game, gf[completed % gf.length]);
         transaction.commit();
+
+            /*}
+        });*/
     }
-
-
 }

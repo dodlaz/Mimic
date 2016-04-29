@@ -1,5 +1,6 @@
 package com.example.dodlaz.mimic;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.hardware.Sensor;
@@ -63,7 +64,6 @@ public class GameFragmentLight extends Fragment {
 
 
     private SensorEventListener LightSensorListener = new SensorEventListener() {
-
         @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
             // TODO Auto-generated method stub
@@ -78,9 +78,13 @@ public class GameFragmentLight extends Fragment {
                 light_game.setBackgroundColor(Color.argb(255, v, v, v));
                 textLIGHT_reading.setText("LIGHT: " + event.values[0] + " -> " + v);
 
-                textLIGHT_reading.setText("" + ((GameActivity) getContext()).getCompleted());
-                if ((toDark && v <= 5) || (!toDark && v >= 250)) {
+                if (((toDark && v <= 5) || (!toDark && v >= 250))) {
                     textLIGHT_reading.setText("a");
+
+                    Activity gActivity = getActivity();
+                    if(gActivity instanceof GameActivity) {
+                        ((GameActivity) gActivity).incCompleted();
+                    }
                 }
 
             }

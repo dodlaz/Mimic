@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/light_game"
+    android:gravity="top|center"
+    android:orientation="vertical">
+
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:maxLength="4"
+        android:ems="10"
+        android:hint="Enter Code:"
+        android:id="@+id/editText_code"
+        android:layout_gravity="center_horizontal"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:gravity="center" />
+</LinearLayout>
