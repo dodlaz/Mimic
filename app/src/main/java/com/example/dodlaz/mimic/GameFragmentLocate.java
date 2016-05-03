@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -19,34 +20,32 @@ import java.util.Random;
  */
 public class GameFragmentLocate extends Fragment {
     private static final String TAG = "GameFragmentLocate";
-    TextView guidance_text;
     Button button;
+    ImageView imageView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gamefragment_locate, container, false);
-        guidance_text = (TextView) rootView.findViewById(R.id.guidance_text);
-        guidance_text.setText("Finde me");
-
-        button = (Button) rootView.findViewById(R.id.button);
-        button.setOnClickListener(click);
-        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-        );
 
         Random r = new Random();
         int top = r.nextInt(50000)+1;
         int bottom = r.nextInt(50000)+1;
 
-        lp.topMargin = top;
-        lp.bottomMargin = bottom;
-        lp.gravity = Gravity.CENTER;
-        button.setLayoutParams(lp);
-
-        guidance_text.setText("Top: "+top+", Bottom: "+bottom);
 
 
+        imageView = (ImageView) rootView.findViewById(R.id.imageView);
+        imageView.setOnClickListener(click);
+
+
+        button = (Button) rootView.findViewById(R.id.button);
+        button.setOnClickListener(click);
+        LinearLayout.LayoutParams lp_b = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+        lp_b.topMargin = top;
+        lp_b.gravity = Gravity.CENTER;
+        button.setLayoutParams(lp_b);
 
         return rootView;
     }

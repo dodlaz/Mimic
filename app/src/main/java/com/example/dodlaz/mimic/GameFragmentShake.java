@@ -6,6 +6,9 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -13,6 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ProgressBar;
 
 /**
@@ -26,27 +31,34 @@ public class GameFragmentShake extends Fragment {
     private int counter = 0;
 
     private long lastTime;
-    private SensorManager mSensorMgr;
 
     private ProgressBar progressBar;
     private int progressBarStatus = 0;
     private Handler mHandler = new Handler();
-
+    private MediaPlayer musik;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gamefragment_shake, container, false);
 
-        mSensorMgr = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        SensorManager mSensorMgr = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+
         // Listen for shakes
         Sensor accelerometer = mSensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         if (accelerometer != null) {
             mSensorMgr.registerListener(shakeListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         }
 
+        //Musik
+        musik = MediaPlayer.create(getContext(), R.raw.dance);
+        musik.setLooping(true);
+        musik.start();
+
+        //Animate
+        Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
+        rootView.findViewById(R.id.imageView).startAnimation(shake);
+
         progressBar = (ProgressBar) rootView.findViewById(R.id.shake_game_progressBar);
-
-
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -56,11 +68,13 @@ public class GameFragmentShake extends Fragment {
                         progressBar.setSecondaryProgress(0);
                         break;
                     }
+
                     try {
                         Thread.sleep(10);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+
                     if ( (100/COUNTER_GOAL)*counter > progressBarStatus) {
                         progressBarStatus += 1;
                     }else{
@@ -88,9 +102,11 @@ public class GameFragmentShake extends Fragment {
     private SensorEventListener shakeListener = new SensorEventListener() {
         @Override
         public void onSensorChanged(SensorEvent event) {
+
             if (event.sensor.getType() != Sensor.TYPE_ACCELEROMETER) {
                 return;
             }
+
             long time = System.currentTimeMillis();
             if ((time - lastTime) > MIN_TIME_BETWEEN_SHAKES_MILLISECS) {
                 double acceleration = Math.sqrt(
@@ -102,11 +118,15 @@ public class GameFragmentShake extends Fragment {
                 if (acceleration > SHAKE_THRESHOLD) {
                     lastTime = time;
                     counter += 1;
+
                     if (counter >= COUNTER_GOAL){
+                        musik.stop();
+
                         Activity gActivity = getActivity();
                         if(gActivity instanceof GameActivity) {
                             ((GameActivity) gActivity).incCompleted();
                         }
+
                     }
                 } else {
                     counter = (counter-2<0?0:counter-2);
@@ -116,8 +136,7 @@ public class GameFragmentShake extends Fragment {
         }
 
         @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        }
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {}
     };
 
 

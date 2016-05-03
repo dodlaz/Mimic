@@ -39,6 +39,10 @@ public class MyDB {
         );
     }
 
+    public void clearScore() {
+        database.delete(HISCORE_TABLE, null, null);
+    }
+
 
     private String getDateTime() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

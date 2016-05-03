@@ -22,6 +22,7 @@ import android.widget.Switch;
 public class SettingsActivity extends AppCompatActivity {
     private Switch sound;
     private Button clear_history;
+    private static MyDB db;
 
 
     @Override
@@ -31,6 +32,8 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        db = new MyDB(SettingsActivity.this);
 
 
         //Sound
@@ -59,18 +62,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                changeText("HEJ");
-            }
-        });
     }
 
 
@@ -101,17 +92,14 @@ public class SettingsActivity extends AppCompatActivity {
                     .setMessage(getResources().getString(R.string.clear_history_question))
                     .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // do nothing (will close dialog)
-                        }
-                    })
+                        public void onClick(DialogInterface dialog, int which) {}})
                     .setPositiveButton(android.R.string.yes,  new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            SharedPreferences sp = getActivity().getSharedPreferences("db", Context.MODE_PRIVATE);
-                            SharedPreferences.Editor edit = sp.edit();
-                            edit.clear();
-                            edit.commit();
+                            //Clear
+                            db.clearScore();
+
+                            //Notify user
                             Snackbar.make(getActivity().findViewById(android.R.id.content), getResources().getString(R.string.history_deleted), Snackbar.LENGTH_LONG)
                                     .setAction("Action", null).show();
                         }

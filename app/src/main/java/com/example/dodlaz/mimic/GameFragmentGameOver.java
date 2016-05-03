@@ -3,6 +3,8 @@ package com.example.dodlaz.mimic;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
@@ -13,21 +15,21 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import static com.example.dodlaz.mimic.R.color.White;
+
 /**
  * Created by dodlaz on 2016-04-07.
  */
 public class GameFragmentGameOver extends Fragment {
     private static final String TAG = "GameFragmentGameOver";
-    private TextView guidance_text;
-    private TableLayout scoreTable;
     private View rootView;
-    private MyDB db;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,11 +39,11 @@ public class GameFragmentGameOver extends Fragment {
         int score = ((GameActivity) getActivity()).getCompleted();
 
         //Score Text
-        guidance_text = (TextView) rootView.findViewById(R.id.guidance_text);
+        TextView guidance_text = (TextView) rootView.findViewById(R.id.guidance_text);
         guidance_text.setText(getResources().getString(R.string.your_score) + ": " + score);
 
         //DB
-        db = new MyDB(rootView.getContext());
+        MyDB db = new MyDB(rootView.getContext());
         db.insScore(score);
         outPutScore(db.getScore());
 
@@ -63,17 +65,27 @@ public class GameFragmentGameOver extends Fragment {
 
 
     private void addRow(String time, String point) {
+        //Init
         TextView date = new TextView(getActivity());
         TextView p = new TextView(getActivity());
-        p.setGravity(Gravity.RIGHT);//TODO set it to END
+
+        //Gravity
+        p.setGravity(Gravity.END);
+
+        //Color
+        date.setTextColor(Color.GRAY);
+        p.setTextColor(Color.GRAY);
+
+        //Text
         date.setText(time);
         p.setText(point);
 
+        //Table
         TableRow row = new TableRow(getActivity());
         row.addView(date);
         row.addView(p);
 
-        scoreTable = (TableLayout) rootView.findViewById(R.id.scoreTable);
+        TableLayout scoreTable = (TableLayout) rootView.findViewById(R.id.scoreTable);
         scoreTable.addView(row);
     }
 

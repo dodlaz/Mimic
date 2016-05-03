@@ -45,7 +45,7 @@ public class GameFragmentCode extends Fragment {
         Notification mNotification = new NotificationCompat.Builder(getActivity())
                 .setContentTitle(getString(R.string.app_name))
                 .setContentText("Code: " + code)
-                .setSmallIcon(android.R.drawable.ic_dialog_alert)
+                .setSmallIcon(R.mipmap.ic_launcher)
                 .setSound(soundUri)
                 .setVibrate(vibrate)
                 .setAutoCancel(true)
@@ -63,11 +63,14 @@ public class GameFragmentCode extends Fragment {
                 if (editText_code.length() > 1
                         && Integer.parseInt(editText_code.getText().toString()) == code) {
 
+                    //Reset for next game
                     editText_code.setText("");
-                    Activity activity123 = getActivity();
-                    Utils.hideKeyboard(activity123);
-                    if (activity123 instanceof GameActivity) {
-                        ((GameActivity) activity123).incCompleted();
+                    cancelNotification(getContext(), NotificationCompat.PRIORITY_MAX);
+
+                    Activity activity = getActivity();
+                    Utils.hideKeyboard(activity);
+                    if (activity instanceof GameActivity) {
+                        ((GameActivity) activity).incCompleted();
                     }
                 }
             }
@@ -87,4 +90,9 @@ public class GameFragmentCode extends Fragment {
     }
 
 
+    public static void cancelNotification(Context ctx, int notifyId) {
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager nMgr = (NotificationManager) ctx.getSystemService(ns);
+        nMgr.cancel(notifyId);
+    }
 }

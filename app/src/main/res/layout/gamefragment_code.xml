@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/light_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/light_game"
-    android:gravity="top|center"
-    android:orientation="vertical">
+    android:background="@color/background">
 
+    <ImageView
+        android:id="@+id/door"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
+        android:scaleType="fitXY"
+        android:src="@drawable/door" />
+
+    <TextView
+        android:id="@+id/guidance_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/White"
+        android:text="@string/the_door_is_locked"
+        android:textSize="30sp"
+        android:textAlignment="center"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal|top" />
 
     <EditText
+        android:id="@+id/editText_code"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="@string/enter_code"
         android:inputType="number"
         android:maxLength="4"
-        android:ems="10"
-        android:hint="Enter Code:"
-        android:id="@+id/editText_code"
-        android:layout_gravity="center_horizontal"
         android:textSize="50sp"
         android:textStyle="bold"
-        android:gravity="center" />
-</LinearLayout>
+        android:layout_gravity="center" />
+
+</FrameLayout>
