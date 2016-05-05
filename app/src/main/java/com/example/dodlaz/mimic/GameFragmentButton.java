@@ -26,11 +26,9 @@ public class GameFragmentButton extends Fragment {
             text = t;
             color = c;
         }
-
         public int getColor() {
             return color;
         }
-
         public String getText() {
             return text;
         }
@@ -43,10 +41,6 @@ public class GameFragmentButton extends Fragment {
             R.id.b3_1, R.id.b3_2, R.id.b3_3,
     };
     private static Button[] bt = new Button[BT_IDS.length];
-    private TextView guidanceText;
-
-    private ButtonColor[] colors;
-
 
     private static boolean longPressAnswer;
     private static ButtonColor buttonColorAnswer;
@@ -60,16 +54,16 @@ public class GameFragmentButton extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gamefragment_button, container, false);
 
-        colors = new ButtonColor[]{
-                new ButtonColor("White",  ContextCompat.getColor(getContext(), R.color.White)),
-                new ButtonColor("Red",    ContextCompat.getColor(getContext(), R.color.Red)),
-                new ButtonColor("Green",  ContextCompat.getColor(getContext(), R.color.Green)),
+        ButtonColor[] colors = new ButtonColor[]{
+                new ButtonColor("White", ContextCompat.getColor(getContext(), R.color.White)),
+                new ButtonColor("Red", ContextCompat.getColor(getContext(), R.color.Red)),
+                new ButtonColor("Green", ContextCompat.getColor(getContext(), R.color.Green)),
                 new ButtonColor("Yellow", ContextCompat.getColor(getContext(), R.color.Yellow)),
-                new ButtonColor("Blue",   ContextCompat.getColor(getContext(), R.color.Blue)),
-                new ButtonColor("Pink",   ContextCompat.getColor(getContext(), R.color.Pink)),
-                new ButtonColor("Cyan",   ContextCompat.getColor(getContext(), R.color.Cyan)),
-                new ButtonColor("Gray",   ContextCompat.getColor(getContext(), R.color.Gray)),
-                new ButtonColor("Black",  ContextCompat.getColor(getContext(), R.color.Black))
+                new ButtonColor("Blue", ContextCompat.getColor(getContext(), R.color.Blue)),
+                new ButtonColor("Pink", ContextCompat.getColor(getContext(), R.color.Pink)),
+                new ButtonColor("Cyan", ContextCompat.getColor(getContext(), R.color.Cyan)),
+                new ButtonColor("Gray", ContextCompat.getColor(getContext(), R.color.Gray)),
+                new ButtonColor("Black", ContextCompat.getColor(getContext(), R.color.Black))
         };
 
         ButtonColor[] b_colors = colors.clone();
@@ -87,16 +81,11 @@ public class GameFragmentButton extends Fragment {
 
 
         longPressAnswer = Math.random() < 0.5;
-        buttonColorAnswer = colors[rnd.nextInt(colors.length - 0) + 0];
-        buttonTextAnser = Math.random() < 0.;
+        buttonColorAnswer = colors[rnd.nextInt(colors.length)];
+        buttonTextAnser = Math.random() < 0.5;
 
 
-        String text;
-        if (longPressAnswer) {
-            text = "Long press the ";
-        } else {
-            text = "Press the ";
-        }
+        String text = longPressAnswer ? "Long press the " : "Press the ";
         if (buttonTextAnser) {
             text += "text saying " + buttonColorAnswer.getText() + ".";
         } else {
@@ -104,7 +93,7 @@ public class GameFragmentButton extends Fragment {
         }
 
 
-        guidanceText = (TextView) rootView.findViewById(R.id.guidance_text);
+        TextView guidanceText = (TextView) rootView.findViewById(R.id.guidance_text);
         guidanceText.setText(text);
 
 
@@ -147,9 +136,9 @@ public class GameFragmentButton extends Fragment {
                             || (!buttonTextAnser
                             && buttonColorAnswer.getColor() == ((ColorDrawable) bt[i].getBackground()).getColor()
                     )) {
-                        Activity activity123 = getActivity();
-                        if (activity123 instanceof GameActivity) {
-                            ((GameActivity) activity123).incCompleted();
+                        Activity activity = getActivity();
+                        if (activity instanceof GameActivity) {
+                            ((GameActivity) activity).incCompleted();
                         }
                         break;
                     }

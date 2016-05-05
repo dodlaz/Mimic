@@ -34,7 +34,7 @@ public class MyDB {
         return database.rawQuery(
                 "SELECT " + DATE + ", " + SCORE
                 + " FROM " + HISCORE_TABLE
-                + " ORDER BY " + SCORE + " DESC"
+                + " ORDER BY CAST("+ SCORE +" AS INTEGER) DESC;"
                 , null
         );
     }

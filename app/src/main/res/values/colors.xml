@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-    <color name="background">#111</color>
+    <color name="colorPrimary">#555</color>
+    <color name="colorPrimaryDark">#111</color>
+    <color name="colorAccent">#00B30F</color>
+    <color name="background_dark">#111</color>
+    <color name="background_light">#555</color>
 
 
     <color name="Red">#F00</color>
@@ -15,15 +16,6 @@
     <color name="White">#FFF</color>
     <color name="Gray">#909090</color>
     <color name="Black">#000</color>
-
-    <!--
-    <color name="DarkRed">#690000</color>
-    <color name="DarkGreen">#006900</color>
-    <color name="DarkYellow">#696900</color>
-    <color name="DarkBlue">#000069</color>
-    <color name="DarkPink">#690069</color>
-    <color name="DarkCyan">#006969</color>
-    -->
 
     <color name="ButtonTextGame">#AAA</color>
     <integer-array name="ButtonGameColors">

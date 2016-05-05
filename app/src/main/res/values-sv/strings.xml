@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Mark</string>
+    <string name="Black">Svart</string>
+    <string name="Blue">Blå</string>
+    <string name="Cyan"></string>
+    <string name="Gray">Grå</string>
+    <string name="Green">Grön</string>
+    <string name="Pink">Råsa</string>
+    <string name="Red">Röd</string>
+    <string name="White">Vit</string>
+    <string name="Yellow">Gul</string>
+    <string name="about">Om</string>
+    <string name="action_settings">Inställningar</string>
+    <string name="button_game_text">Tryck på knappen som säger</string>
+    <string name="clear">Rensa</string>
+    <string name="clear_history_question">Rensa historiken</string>
+    <string name="clear_score">Rensa poängen</string>
+    <string name="credits">Tillkännagivande</string>
+    <string name="credits_text">Dessa sidor har bidragit med ljud och bild till appen\n * https://openclipart.org\n * https://www.freesound.org</string>
+    <string name="donate_menu_item_title">Donera</string>
+    <string name="donate_text">Vänligen donera pengar. Så jag kan bygga fler spel, program, osv…\nEn: Thank you for your donation.\nSv: Tackar för din donation.</string>
+    <string name="enter_code">Ange kod:</string>
+    <string name="game_over"></string>
+    <string name="history_deleted">Historia borttagen</string>
+    <string name="how_to_play">Hur man spelar</string>
+    <string name="how_to_play_text">Målet i spelet är att göra så många uppdrag som möjligt innan tiden går ut.</string>
+    <string name="ins_light_game_to_bright">Det är för mörkt. Gör det ljusare.</string>
+    <string name="ins_light_game_to_dark">Det är för ljus. Gör det mörkare.</string>
+    <string name="n_sec">Tid kvar: %1$d</string>
+    <string name="off">Av</string>
+    <string name="on">På</string>
+    <string name="play">Spela</string>
+    <string name="press_the">Tryck på</string>
+    <string name="sec_remaining">sekunder som återstår</string>
+    <string name="sound">Ljud</string>
+    <string name="story">Berättelse</string>
+    <string name="story_text">Mark är uttråkad. Det är nu ditt jobb att göra honom glad igen. Genom att göra de saker han vill göra.</string>
+    <string name="the_door_is_locked">Dören är låst…\n Jag har nu sickad koden till dig.</string>
+    <string name="time_to_shake_it">Dags att skaka</string>
+    <string name="title_activity_game">Spel</string>
+    <string name="title_activity_settings">Inställningar</string>
+    <string name="you_can_t_find_me">Du kan inte hitta mig.</string>
+    <string name="your_score">Din poäng</string>
+</resources>

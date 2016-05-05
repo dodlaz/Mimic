@@ -2,6 +2,7 @@ package com.example.dodlaz.mimic;
 
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,39 +21,51 @@ import java.io.IOException;
  */
 public class GameFragmentSound extends Fragment {
     private static final String TAG = "GameFragmentSound";
+    private static final double MAX_VOLUME = 10000.0d;
+    private static final int MAX_AMOUNT = 3;
+    private int amount = 0;
+    private double volume;
     private TextView guidance_text;
-
     private SoundMeter soundMeter;
-    private Handler mHandler = new Handler();
 
+    private Handler mHandler = new Handler();
+    private Activity activity;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gamefragment_sound, container, false);
 
         guidance_text = (TextView) rootView.findViewById(R.id.guidance_text);
-        soundMeter = new SoundMeter();
+        activity = getActivity();
 
+        soundMeter = new SoundMeter();
 
         new Thread(new Runnable() {
             @Override
             public void run() {
                 soundMeter.start();
-                try {
-                    while (true) {
-                        try {
-                            Thread.sleep(1000);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        mHandler.post(new Runnable() {
-                            public void run() {
-                                guidance_text.setText("getMaxAmplitude: " + soundMeter.getAmplitude());
-                            }
-                        });
+                while (true) {
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
-                } finally {
-                    soundMeter.stop();
+                    mHandler.post(new Runnable() {
+                        public void run() {
+                            volume = soundMeter.getAmplitude();
+                            if (MAX_VOLUME <= volume) {
+                                amount++;
+                            } else {
+                                guidance_text.setText("getMaxAmplitude: " + volume);
+                            }
+                            if(MAX_AMOUNT<=amount){
+                                volume = 0.0d;
+                                if (activity instanceof GameActivity) {
+                                    ((GameActivity) activity).incCompleted();
+                                }
+                            }
+                        }
+                    });
                 }
             }
         }).start();
@@ -60,6 +73,13 @@ public class GameFragmentSound extends Fragment {
 
         return rootView;
     }
+
+    @Override
+    public void onStop() {
+        soundMeter.stop();
+        super.onStop();
+    }
+
 
     private class SoundMeter {
 

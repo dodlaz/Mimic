@@ -6,6 +6,7 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,6 +49,8 @@ public class GameFragmentCode extends Fragment {
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setSound(soundUri)
                 .setVibrate(vibrate)
+                .setColor(Color.BLACK)
+                .setLights(Color.BLUE, 500, 500)
                 .setAutoCancel(true)
                 .build();
 

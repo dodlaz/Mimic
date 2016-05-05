@@ -2,6 +2,7 @@ package com.example.dodlaz.mimic;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -11,6 +12,7 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,22 +39,32 @@ public class GameFragmentShake extends Fragment {
     private Handler mHandler = new Handler();
     private MediaPlayer musik;
 
+    private SharedPreferences sp;
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.gamefragment_shake, container, false);
 
-        SensorManager mSensorMgr = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        SensorManager mSensorMgr = (SensorManager) getActivity()
+                .getSystemService(Context.SENSOR_SERVICE);
 
         // Listen for shakes
         Sensor accelerometer = mSensorMgr.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         if (accelerometer != null) {
-            mSensorMgr.registerListener(shakeListener, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+            mSensorMgr.registerListener(shakeListener,
+                    accelerometer,
+                    SensorManager.SENSOR_DELAY_NORMAL);
         }
 
         //Musik
-        musik = MediaPlayer.create(getContext(), R.raw.dance);
-        musik.setLooping(true);
-        musik.start();
+        sp = PreferenceManager.getDefaultSharedPreferences(getContext());
+        if(sp.getBoolean("Sound", false)) {
+            musik = MediaPlayer.create(getContext(), R.raw.dance);
+            musik.setLooping(true);
+            musik.start();
+        }
 
         //Animate
         Animation shake = AnimationUtils.loadAnimation(getContext(), R.anim.shake);
@@ -63,7 +75,7 @@ public class GameFragmentShake extends Fragment {
             @Override
             public void run() {
                 while (progressBarStatus < 100) {
-                    if (counter >= COUNTER_GOAL){
+                    if (counter >= COUNTER_GOAL) {
                         progressBar.setProgress(0);
                         progressBar.setSecondaryProgress(0);
                         break;
@@ -75,9 +87,9 @@ public class GameFragmentShake extends Fragment {
                         e.printStackTrace();
                     }
 
-                    if ( (100/COUNTER_GOAL)*counter > progressBarStatus) {
+                    if ((100 / COUNTER_GOAL) * counter > progressBarStatus) {
                         progressBarStatus += 1;
-                    }else{
+                    } else {
                         progressBarStatus -= 1;
                     }
 
@@ -95,8 +107,6 @@ public class GameFragmentShake extends Fragment {
 
         return rootView;
     }
-
-
 
 
     private SensorEventListener shakeListener = new SensorEventListener() {
@@ -119,25 +129,31 @@ public class GameFragmentShake extends Fragment {
                     lastTime = time;
                     counter += 1;
 
-                    if (counter >= COUNTER_GOAL){
-                        musik.stop();
+                    if (counter >= COUNTER_GOAL) {
 
                         Activity gActivity = getActivity();
-                        if(gActivity instanceof GameActivity) {
+                        if (gActivity instanceof GameActivity) {
                             ((GameActivity) gActivity).incCompleted();
                         }
 
                     }
                 } else {
-                    counter = (counter-2<0?0:counter-2);
+                    counter = (counter - 2 < 0 ? 0 : counter - 2);
                 }
-                progressBar.setSecondaryProgress((100/COUNTER_GOAL)*counter);
+                progressBar.setSecondaryProgress((100 / COUNTER_GOAL) * counter);
             }
         }
 
         @Override
-        public void onAccuracyChanged(Sensor sensor, int accuracy) {}
+        public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        }
     };
 
-
+    @Override
+    public void onStop() {
+        if(sp.getBoolean("Sound", false)) {
+            musik.stop();
+        }
+        super.onStop();
+    }
 }

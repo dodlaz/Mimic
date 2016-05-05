@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:id="@+id/shake_game"
     android:gravity="top|center"
-    android:background="@color/background"
+    android:background="@color/background_dark"
     android:orientation="vertical">
 
     <TextView
